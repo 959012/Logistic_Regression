@@ -1,0 +1,26 @@
+Project-1(Data from Sklearn)
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_digits
+rawdata = load_digits()
+print(rawdata.keys())
+rawdata.DESCR
+print(rawdata.data.shape)
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(rawdata.data,rawdata.target,test_size= 0.25, random_state=0)
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(x_train,y_train)
+predictions = model.predict(x_test)
+score = model.score(x_test,y_test)
+from sklearn.metrics import confusion_matrix,accuracy_score
+cm = confusion_matrix(y_test,predictions)
+print(cm)
+plt.figure(figsize=(9,9))
+sns.heatmap(cm, annot=True, fmt=".3f", linewidths=.5, square = True, cmap = 'Blues_r');
+plt.ylabel('Actual label');
+plt.xlabel('Predicted label');
+all_sample_title = 'Accuracy Score: {0}'.format(score)
+plt.title(all_sample_title, size = 15);
